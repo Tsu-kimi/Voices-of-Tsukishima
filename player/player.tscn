@@ -385,7 +385,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_e27jw")
 }],
-"loop": false,
+"loop": true,
 "name": &"jump",
 "speed": 11.0
 }, {

@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 const GRAVITY = 1000
 @export var speed: int = 300
-@export var jump: int = 300
+@export var jump: int = -300
 @export var jump_horizontal: int = 300
 
 enum State { Idle, Run, Jump } # Added Jump state
