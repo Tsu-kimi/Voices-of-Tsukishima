@@ -2,9 +2,12 @@ extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 const GRAVITY = 1000
-@export var speed: int = 300
+@export var speed: int = 1000
+@export var max_horizontal_speed = 300
 @export var jump: int = -300
-@export var jump_horizontal: int = 300
+@export var jump_horizontal_speed : int = 1000
+@export var max_jump_horizontal_speed = 300
+@export var slow_down_speed : int = 1700
 
 enum State { Idle, Run, Jump } # Added Jump state
 
@@ -44,11 +47,12 @@ func Player_run(delta : float):
 	var direction = input_movement()
 
 	if direction:
-		velocity.x = direction * speed
+		velocity.x += direction * speed * delta
+		velocity.x = clamp(velocity.x, -max_horizontal_speed, max_horizontal_speed)
 	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.x = move_toward(velocity.x, 0, slow_down_speed * delta)
 
-	if direction != 0:
+	if direction != 0 and is_on_floor():
 		current_state = State.Run
 		animated_sprite_2d.flip_h = false if direction > 0 else true
 
@@ -59,7 +63,9 @@ func Player_jump(delta : float):
 
 	if !is_on_floor() and current_state == State.Jump:
 		var direction = input_movement()
-		velocity.x += direction * jump_horizontal * delta
+		velocity.x += direction * jump_horizontal_speed * delta
+		velocity.x = clamp(velocity.x, -max_jump_horizontal_speed , max_jump_horizontal_speed )
+		animated_sprite_2d.flip_h = false if direction > 0 else true if direction != 0 else animated_sprite_2d.flip_h
 
 
 func Player_animation():
