@@ -173,6 +173,5 @@ sources/1 = SubResource("TileSetAtlasSource_gbtbn")
 tile_set = SubResource("TileSet_8oc66")
 
 [node name="player" parent="." instance=ExtResource("2_oxhtc")]
-position = Vector2(-40, -66)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
